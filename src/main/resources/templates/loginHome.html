@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title> AMS </title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+<div>
+    <div>
+        <h2>AMS</h2>
+        <p th:text="${member_id} + '님 안녕하세요'" >empty</p>
+    </div>
+
+    <div class="col">
+
+        <button class="" type="button"
+                th:onclick="|location.href='@{/member/join}'|">
+            등록
+        </button>
+
+        <button class=""
+                th:onclick="|location.href='@{/member/logout}'|" type="button">
+            로그아웃
+        </button>
+
+        <button class=""
+                th:onclick="|location.href='@{/member/edit}'|" type="button">
+            회원수정
+        </button>
+
+        <button class=""
+                th:onclick="|location.href='@{/community/home}'|" type="button">
+            커뮤니티
+        </button>
+
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css"
+          th:href = "@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+ .container {
+ max-width: 560px;
+ }
+ </style>
+</head>
+
+<body>
+<div class="container">
+    <dir>
+        <h2>AMS</h2>
+    </dir>
+
+    <div>
+        <label for="BoardName">작성자:</label>
+        <input type="text" id="BoardName" name="boardName" class="" value="" th:value="${post.id}" readonly>
+    </div>
+    <div>
+        <label for="BoardId">제목:</label>
+        <input type="text" id="BoardId" name="boardId" class="" value="" th:value="${post.title}" readonly>
+    </div>
+    <div>
+        <label for="BoardContext">내용:</label>
+        <input type="text" id="BoardContext" name="boardContext" style="width:300px;height:500px;" class="" value="" th:value="${post.content}"  readonly>
+    </div>
+    <hr class="my-4">
+
+
+    <div class="col">
+        <button class=""
+                onclick="location.href='editForm.html'"
+                th:onclick="|location.href= '@{/community/{postId}/edit(postId=${post.id})}'|"
+                type="button">수정</button>
+
+        <button class=""
+                onclick="location.href='items.html'"
+                th:onclick = "|location.href = '@{/community/home}'|"
+                type="button">홈으로</button>
+    </div>
+
+</div> <!-- /container -->
+</body>
+</html>

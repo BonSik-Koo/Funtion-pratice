@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<dir>
+    <dir>
+        <h2>AMS</h2>
+    </dir>
+
+    <dir>
+        <form th:action="@{/community/add}" method="post" th:object="${postSaveForm}" >
+
+            <div>
+                <label for="id"> ID</label>
+                <input type="text" id="id" th:name="name" th:value="${post_id}" readonly >
+            </div>
+
+            <div>
+                <label for="title"> title</label>
+                <input type="text" id="title" th:field="*{title}">
+                <div th:errors="*{title}" />
+            </div>
+
+            <div>
+                <label for="context"> context</label>
+                <input type="text" id="context" th:field="*{content}" style="width:300px;height:500px;" >
+                <div th:errors="*{content}" />
+            </div>
+
+            <div class="col">
+                <button type="submit"> 게시 </button>
+
+                <button class=""
+                        onclick="location.href='item.html'"
+                        th:onclick="|location.href='@{/community/home}'|"
+                        type="button">취소</button>
+            </div>
+
+        </form>
+    </dir>
+
+</dir>
+</body>
+</html>

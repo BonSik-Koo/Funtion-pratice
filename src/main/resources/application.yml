@@ -1,0 +1,23 @@
+server:
+  port: 8888
+  servlet:
+    session:
+      timeout: 100 #세션 타임아웃 설정 -> 스프링 부트로 글로벌 설정 --> 모든 session 의 생명주기를 60초로 설정
+      tracking-modes: cookie #URL 전달 방식을 끄고 항상 쿠키를 통해서만 세션을 유지하기
+
+# MySQL database source
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ams?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+
+
