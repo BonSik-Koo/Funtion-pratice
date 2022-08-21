@@ -16,7 +16,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String nickName;
+    private String nickName; //고유 닉네임으로?!
     private String userId;
     private String password;
     private Integer birthday;

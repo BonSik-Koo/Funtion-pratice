@@ -3,6 +3,7 @@ package project.AMS.domain.post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import project.AMS.domain.hashtag.posthashtag.PostHashtag;
 import project.AMS.domain.member.Member;
 import project.AMS.domain.reply.Reply;
 
@@ -28,7 +29,7 @@ public class Post {
 
     private String title; //제목
     private String problem_uri; //문제 링크
-    private String content; //작성한 코드
+    private String content; //작성한  내용
 
     private LocalDateTime redate; //등록 날짜
     private LocalDateTime chdate; //마지막 수정 날짜
@@ -36,9 +37,23 @@ public class Post {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     private List<Reply> reply = new ArrayList<>();
 
+
+
     /**
-     * 나중에 "태그"도 넣어주기
+     * 태그 부분
      */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.ALL)
+    private List<PostHashtag> postHashtags = new ArrayList<>();
+    /**
+     * 양방향 연관관계 메서드
+     */
+    public void addPostHashtag(PostHashtag postHashtag) {
+        postHashtag.setPost(this);
+        postHashtags.add(postHashtag);
+    }
+
+
+
 
     //생성 메서드
     public Post createPost(Member member, String title, String problem_uri, String content) {

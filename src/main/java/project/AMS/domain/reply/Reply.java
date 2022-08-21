@@ -2,6 +2,7 @@ package project.AMS.domain.reply;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import project.AMS.domain.post.Post;
 import project.AMS.web.apiController.form.reply.ReplySaveForm;
 
@@ -27,13 +28,20 @@ public class Reply {
     private String content;
     private LocalDateTime reDate; //댓글단 시간
 
-    /**
-     * 일단 나두고 그냥 댓글만 하는중...
-     */
-    //대댓글을 위한 변수
-    private Long reGroup;
-    private Long reLevel;
 
+    //대댓글을 위한 변수
+    private Integer reGroup; // 경우값 (1,2,...)
+    private Integer reLevel; //경우값 (1,2)
+
+    public String toString() {
+        return "id: " + id
+                +" userId: " + userId
+                + " title: " + title
+                + " content: " + content
+                + " reGroup: " + reGroup
+                + " reLevel: " + reLevel;
+
+    }
 
     /**
      * 생성 메서드
@@ -43,6 +51,9 @@ public class Reply {
         content = replySaveForm.getContent();
         title = replySaveForm.getTitle();
         reDate = LocalDateTime.now();
+
+        reGroup = replySaveForm.reGroup;
+        reLevel = replySaveForm.reLevel;
     }
 
     /**

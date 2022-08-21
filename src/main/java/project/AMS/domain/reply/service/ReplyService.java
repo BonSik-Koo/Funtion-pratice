@@ -1,5 +1,6 @@
 package project.AMS.domain.reply.service;
 
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class ReplyService {
     public Reply addReply(ReplySaveForm replySaveForm, Long postId) {
 
         //댓글단 게시물 찾기
-        Post findPost = postRepository.findById(postId);
+        Post findPost = postRepository.findByPostId(postId);
 
         //댓글 객체 생성
         Reply reply = new Reply();
@@ -34,21 +35,11 @@ public class ReplyService {
         return replyRepository.add(reply); //저장
     }
 
-    public List<Reply> findALLReplyLevel0(Integer postId) { //post에 댓글-댓글 모두 가져오기
-        List<Reply> allReply = replyRepository.findALlReplyFromPost(postId);
+    public List<Reply> findAllReply(Long postId) { //post에 댓글-댓글 모두 가져오기
 
-        List<Reply> findReply = allReply.stream()
-                .filter(r -> r.getReLevel() == 0L)
-                .collect(Collectors.toList());
-        return findReply;
+        List<Reply> replys = replyRepository.findALlReplyFromPost(postId);
+        return replys;
     }
-
-//    public List<ReplyForm> findAllReplyEqualGroup(Integer postId, Integer Group) { //post에 댓글-대댓글 모두 가져오기
-//        List<ReplyForm> allReply = replyRepository.findALlReplyFromPost(postId);
-//
-//        allReply.stream()
-//                .
-//    }
 
 
 }

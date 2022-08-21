@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import project.AMS.domain.member.QMember;
 import project.AMS.domain.post.Post;
 import project.AMS.domain.post.QPost;
+import project.AMS.domain.post.search.PostSearch;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -47,11 +48,10 @@ public class JpaPostRepository implements PostRepository{
     }
 
     /**
-     * 추후 "페이징" 기능 넣기
+     * 추후 "페이징" 기능 넣기, 해시태그 기능
      */
     @Override
     public List<Post> findAllByUserId(String userId) {
-
         JPAQueryFactory query = new JPAQueryFactory(em);
 
         return query.select(QPost.post)
@@ -65,13 +65,16 @@ public class JpaPostRepository implements PostRepository{
         if(!StringUtils.hasText(userId))
             return null;
 
-        return QPost.post.member.userId.like(userId);
+        return QPost.post.member.userId.eq(userId);
+
     }
 
 
-    @Override
-    public Post findById(Long Id) {
-        Post findPost = em.find(Post.class, Id);
+    public Post findByPostId(Long postId) {
+        Post findPost = em.find(Post.class, postId);
         return findPost;
     }
+
+
+
 }

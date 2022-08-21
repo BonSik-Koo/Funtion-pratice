@@ -14,8 +14,6 @@ import project.AMS.domain.post.service.PostService;
 
 import java.util.List;
 
-
-
 @SpringBootTest
 @Transactional
 class JpaPostRepositoryTest {

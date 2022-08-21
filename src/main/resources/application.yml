@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8080
   servlet:
     session:
       timeout: 100 #세션 타임아웃 설정 -> 스프링 부트로 글로벌 설정 --> 모든 session 의 생명주기를 60초로 설정
@@ -16,8 +16,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
+
+    properties:
+      hibernate:
+        show_sql: true
+        #format_sql: true
+        default_batch_fetch_size: 100
+
 
 

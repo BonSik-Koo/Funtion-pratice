@@ -7,7 +7,7 @@ import project.AMS.domain.post.Post;
 
 @Data
 @AllArgsConstructor
-
+@NoArgsConstructor
 public class PostListDto {
 
     private Long id; //문제 id

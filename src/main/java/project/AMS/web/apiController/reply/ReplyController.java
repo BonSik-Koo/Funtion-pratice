@@ -2,10 +2,7 @@ package project.AMS.web.apiController.reply;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import project.AMS.domain.post.Post;
-import project.AMS.domain.post.service.PostService;
 import project.AMS.domain.reply.Reply;
-import project.AMS.domain.reply.repository.ReplyRepository;
 import project.AMS.domain.reply.service.ReplyService;
 import project.AMS.web.apiController.form.reply.ReplySaveForm;
 import project.AMS.web.response.SuccessResponse;
@@ -28,14 +25,12 @@ public class ReplyController {
     */
     @PostMapping("/{userId}/{postId}/reply") //여기서 "userId"는 게시물 주인의 사용자 아이디!!
     public SuccessResponse addReply(@PathVariable("userId") String userId, @PathVariable("postId")Long postId,
-                           @ModelAttribute ReplySaveForm replySaveForm) {
-
+                                    @ModelAttribute ReplySaveForm replySaveForm) {
 
         //정상 흐름
         Reply reply = replyService.addReply(replySaveForm, postId);
         SuccessResponse response = new SuccessResponse<>("200", "댓글 저장 성공입니다.", null);
         return response;
     }
-
 
 }

@@ -49,11 +49,16 @@ dependencies {
 	//querydsl 추가
 	implementation 'com.querydsl:querydsl-apt'
 	//implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6' //sql문을 다 로그로 찍어준다.(외부 라이브러리) -> 실제 배포할때는 고민해보기!!!성능 안좋아질수도 있다.
+
+	//swagger 사용
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
 }
 
 //querydsl 추가
-def queryDslDir = "src/main/generated"
-//def querydslDir = "$buildDir/generated/querydsl"
+//def queryDslDir = "src/main/generated"
+def queryDslDir = "$buildDir/generated/querydsl"
 querydsl {
 	library = "com.querydsl:querydsl-apt"
 	jpa = true
@@ -72,7 +77,6 @@ compileQuerydsl{
 configurations {
 	querydsl.extendsFrom compileClasspath
 }
-
 
 
 tasks.named('test') {

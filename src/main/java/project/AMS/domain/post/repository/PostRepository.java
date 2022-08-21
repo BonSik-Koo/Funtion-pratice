@@ -1,7 +1,7 @@
 package project.AMS.domain.post.repository;
 
-import project.AMS.domain.member.Member;
 import project.AMS.domain.post.Post;
+import project.AMS.domain.post.search.PostSearch;
 
 import java.util.List;
 
@@ -12,8 +12,7 @@ public interface PostRepository {
     public void delete(Post post);
     public List<Post> findAll(); //모든 커뮤니티 게시물 가져오기
     public List<Post> findAllByUserId(String userId); //사용자 아이디로 게시물들 찾기
-    public Post findById(Long Id); //post 의 고유ID 로 찾기
-
+    public Post findByPostId(Long Id); //post 의 고유ID 로 찾기
 
 
 }

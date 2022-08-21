@@ -30,9 +30,9 @@ public class QReply extends EntityPathBase<Reply> {
 
     public final DateTimePath<java.time.LocalDateTime> reDate = createDateTime("reDate", java.time.LocalDateTime.class);
 
-    public final NumberPath<Long> reGroup = createNumber("reGroup", Long.class);
+    public final NumberPath<Integer> reGroup = createNumber("reGroup", Integer.class);
 
-    public final NumberPath<Long> reLevel = createNumber("reLevel", Long.class);
+    public final NumberPath<Integer> reLevel = createNumber("reLevel", Integer.class);
 
     public final StringPath title = createString("title");
 
