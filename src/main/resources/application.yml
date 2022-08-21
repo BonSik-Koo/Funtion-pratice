@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8888
   servlet:
     session:
       timeout: 100 #세션 타임아웃 설정 -> 스프링 부트로 글로벌 설정 --> 모든 session 의 생명주기를 60초로 설정
