@@ -66,9 +66,9 @@ test.onlyIf {
  * 이렇게 생성된 *plain.jar 파일은 모든 의존성이 존재하는게 아니기 때문에 java -jar 명령어로 실행시 에러가 발생한다.
  * 아래 코드는 jar 빌드시에 plain.jar 파일이 생성되지 않게 해주는 코드이다.
  */
-jar {
-	enable =false
-}
+//jar {
+//	enable =false
+//}
 
 //querydsl 추가
 //def queryDslDir = "src/main/generated"
