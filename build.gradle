@@ -30,11 +30,9 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	//implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -42,17 +40,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	//testImplementation 'org.springframework.security:spring-security-test'
-
-	//querydsl 추가
-	implementation 'com.querydsl:querydsl-jpa'
-	//querydsl 추가
-	implementation 'com.querydsl:querydsl-apt'
-	//implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6' //sql문을 다 로그로 찍어준다.(외부 라이브러리) -> 실제 배포할때는 고민해보기!!!성능 안좋아질수도 있다.
-
-	//swagger 사용
-	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
 	//Redis cache
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -65,38 +52,6 @@ dependencies {
 test.onlyIf {
 	!project.hasProperty('test')
 }
-
-/**
- * plain archive 는 애플리케이션 실행에 필요한 모든 의존성을 포함하지 않고 작성된 소스코의 클래스 파일과 리소스 파일만 포함한다.
- * 이렇게 생성된 *plain.jar 파일은 모든 의존성이 존재하는게 아니기 때문에 java -jar 명령어로 실행시 에러가 발생한다.
- * 아래 코드는 jar 빌드시에 plain.jar 파일이 생성되지 않게 해주는 코드이다.
- */
-//jar {
-//	enable =false
-//}
-
-//querydsl 추가
-//def queryDslDir = "src/main/generated"
-def queryDslDir = "$buildDir/generated/querydsl"
-querydsl {
-	library = "com.querydsl:querydsl-apt"
-	jpa = true
-	querydslSourcesDir = queryDslDir
-}
-sourceSets {
-	main {
-		java {
-			srcDirs = ['src/main/java', queryDslDir]
-		}
-	}
-}
-compileQuerydsl{
-	options.annotationProcessorPath = configurations.querydsl
-}
-configurations {
-	querydsl.extendsFrom compileClasspath
-}
-
 
 tasks.named('test') {
 	useJUnitPlatform()

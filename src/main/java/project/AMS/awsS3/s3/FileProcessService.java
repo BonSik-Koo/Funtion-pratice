@@ -34,6 +34,11 @@ public class FileProcessService {
         return fileService.getFileUrl(fileName);
     }
 
+    public void deleteImage(String url){
+        fileService.deleteFile(convertToFileName(url));
+    }
+
+
     //파일 이름 생성 로직
     private String createFileName(String originalFileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(originalFileName));
@@ -46,6 +51,12 @@ public class FileProcessService {
         }catch(StringIndexOutOfBoundsException e) {
             throw new IllegalArgumentException(String.format("잘못된 형식의 파일 (%s) 입니다.",fileName));
         }
+    }
+
+    //이미지 URL->파일 이름 변환
+    private String convertToFileName(String imageUrl){
+        String[] path = imageUrl.split("/");
+        return path[path.length-2] + path[path.length-1];  //폴더 이름 + 파일 이름
     }
 
 }

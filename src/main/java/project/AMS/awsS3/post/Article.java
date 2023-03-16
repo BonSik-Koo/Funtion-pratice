@@ -3,11 +3,8 @@ package project.AMS.awsS3.post;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.AMS.awsS3.image.Image;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Entity
@@ -18,10 +15,10 @@ public class Article {
     private Long id;
 
     private String title;
-    private String context;
+    private String content;
 
-    public Article(String title, String context) {
+    public Article(String title, String content) {
         this.title = title;
-        this.context = context;
+        this.content = content;
     }
 }
