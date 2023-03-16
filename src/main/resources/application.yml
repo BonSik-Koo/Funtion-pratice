@@ -5,11 +5,12 @@ server:
       timeout: 100 #세션 타임아웃 설정 -> 스프링 부트로 글로벌 설정 --> 모든 session 의 생명주기를 60초로 설정
       tracking-modes: cookie #URL 전달 방식을 끄고 항상 쿠키를 통해서만 세션을 유지하기
 
+---
 # MySQL database source
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://43.200.219.233:3306/ams?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/ams?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: 1234
 
@@ -23,5 +24,23 @@ spring:
         #format_sql: true
         default_batch_fetch_size: 100
 
+# swagger 오류
+# : Spring boot 2.6버전 이후에 spring.mvc.pathmatch.matching-strategy 값이
+#   ant_apth_matcher에서 path_pattern_parser로 변경되면서 몇몇 라이브러리에서 오류가 발생하고 있다!
+  mvc:
+    pathmatch:
+      matching-strategy : ant_path_matcher
+
+#Redis Cache
+  redis:
+    host: localhost
+    port: 6379
 
 
+---
+# s3 연습
+spring:
+  profiles:
+    include:
+      - aws
+      - credentials

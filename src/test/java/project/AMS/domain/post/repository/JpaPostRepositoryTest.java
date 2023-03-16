@@ -5,12 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import project.AMS.domain.member.Member;
-import project.AMS.domain.member.service.MemberService;
-import project.AMS.domain.post.Post;
-import project.AMS.domain.post.service.PostService;
+import project.AMS.codebox_project.domain.member.Member;
+import project.AMS.codebox_project.domain.member.service.MemberService;
+import project.AMS.codebox_project.domain.post.Post;
+import project.AMS.codebox_project.domain.post.service.PostService;
 
 import java.util.List;
 
