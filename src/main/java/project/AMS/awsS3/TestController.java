@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.AMS.awsS3.image.Image;
 import project.AMS.awsS3.image.ImageRepository;
+import project.AMS.awsS3.image.ImageService;
 import project.AMS.awsS3.post.Article;
 import project.AMS.awsS3.post.ArticleRepository;
 import project.AMS.awsS3.post.ArticleService;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class TestController {
 
     private final ArticleService articleService;
+    private final ImageService imageService;
     private final ArticleRepository articleRepository;
     private final ImageRepository imageRepository;
 
@@ -34,7 +36,12 @@ public class TestController {
                            @RequestParam("context") String context,
                            @RequestParam("imageFileList") List<MultipartFile> lists) {
 
-        articleService.saveArticle(title, context, lists);
+        //게시물 저장
+        Long saveArticleId = articleService.saveArticle(title, context);
+
+        //이미지 저장
+        imageService.saveArticleImages(saveArticleId, lists);
+
         return "save success";
     }
     //2. Request : multipart + json
@@ -42,7 +49,8 @@ public class TestController {
     public String saveByJson(@RequestPart ArticleForm form,
                              @RequestPart List<MultipartFile> imgFiles) {
 
-        articleService.saveArticle(form.getTitle(), form.getContent(), imgFiles);
+        Long saveArticleId = articleService.saveArticle(form.getTitle(), form.getContent());
+        imageService.saveArticleImages(saveArticleId, imgFiles);
         return "save success";
     }
 
@@ -67,14 +75,25 @@ public class TestController {
 
     //게시물 삭제
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id){
+    public String delete(@PathVariable("id") Long articleId){
 
-        articleService.deleteArticle(id);
+        imageService.deleteArticleImage(articleId);
+        articleService.deleteArticle(articleId);
+
         return "delete success";
     }
 
     //게시물 수정(정보, 사진 수정)
+    @PutMapping(value = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String update(@PathVariable("id") Long articleId,
+                         @RequestPart ArticleEditForm form,
+                         @RequestParam List<MultipartFile> images){
 
+        articleService.editArticle(articleId, form.getTitle(), form.getContent());
+        imageService.editArticleImages(articleId, images);
+
+        return "edit success";
+    }
 
 
     @Data
@@ -84,7 +103,13 @@ public class TestController {
         private String title;
         private String content;
     }
-
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class ArticleEditForm {
+        private String title;
+        private String content;
+    }
     @Data
     static class ArticleDto {
         private Long id;

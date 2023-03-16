@@ -2,6 +2,7 @@ package project.AMS.awsS3.s3;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileProcessService {
@@ -56,7 +58,8 @@ public class FileProcessService {
     //이미지 URL->파일 이름 변환
     private String convertToFileName(String imageUrl){
         String[] path = imageUrl.split("/");
-        return path[path.length-2] + path[path.length-1];  //폴더 이름 + 파일 이름
+
+        return path[path.length-2] + "/" + path[path.length-1];  //폴더 이름 + 파일 이름
     }
 
 }
