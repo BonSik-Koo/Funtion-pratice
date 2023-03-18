@@ -5,10 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import project.AMS.awsS3.post.Article;
-import project.AMS.awsS3.post.ArticleRepository;
+import project.AMS.awsS3.article.Article;
+import project.AMS.awsS3.article.ArticleRepository;
 import project.AMS.awsS3.s3.FileFolder;
-import project.AMS.awsS3.s3.FileProcessService;
+import project.AMS.awsS3.s3.FileService;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final ArticleRepository articleRepository;
-    private final FileProcessService fileProcessService;
+    private final FileService fileService;
 
     @Transactional
     public void saveArticleImages(Long articleId, List<MultipartFile> files) {
@@ -28,8 +28,8 @@ public class ImageService {
         Article article = articleRepository.findById(articleId).orElseThrow(() -> new NullPointerException("존재하지 않는 게시물입니다."));
 
         for(MultipartFile multipartFile : files) {
-            String url = fileProcessService.uploadImage(multipartFile, FileFolder.POST_IMAGES);
-            imageRepository.save(new Image(url, article));
+            String storageFileName = fileService.uploadFile(multipartFile, FileFolder.POST_IMAGES);
+            imageRepository.save(new Image(multipartFile.getOriginalFilename(),storageFileName, fileService.getFileUrl(storageFileName), article));
         }
     }
 
@@ -40,7 +40,7 @@ public class ImageService {
 
         for(Image image : images) {
             //이미지 저장소 삭제
-            fileProcessService.deleteImage(image.getImageUrl());
+            fileService.deleteFile(image.getStorageImageName());
             //엔티티 삭제
             imageRepository.deleteById(image.getId());
         }

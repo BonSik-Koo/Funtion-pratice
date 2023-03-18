@@ -1,20 +1,23 @@
 package project.AMS.awsS3;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.AMS.awsS3.image.Image;
 import project.AMS.awsS3.image.ImageRepository;
 import project.AMS.awsS3.image.ImageService;
-import project.AMS.awsS3.post.Article;
-import project.AMS.awsS3.post.ArticleRepository;
-import project.AMS.awsS3.post.ArticleService;
+import project.AMS.awsS3.article.Article;
+import project.AMS.awsS3.article.ArticleRepository;
+import project.AMS.awsS3.article.ArticleService;
+import project.AMS.awsS3.s3.FileService;
+import project.AMS.awsS3.common.CommonUtils;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,8 @@ public class TestController {
 
     private final ArticleService articleService;
     private final ImageService imageService;
+
+    private final FileService fileService;
     private final ArticleRepository articleRepository;
     private final ImageRepository imageRepository;
 
@@ -95,6 +100,29 @@ public class TestController {
         return "edit success";
     }
 
+    //파일 다운로드
+    @GetMapping("/download/{id}")
+    public ResponseEntity<ByteArrayResource> download(@PathVariable("id") Long imageId) throws FileNotFoundException {
+
+        Image image = imageRepository.findById(imageId).orElseThrow(() -> new NullPointerException("존재하지 않은 파일 입니다."));
+
+        byte[] bytes = fileService.downloadFile(image.getStorageImageName());
+        ByteArrayResource resource = new ByteArrayResource(bytes);
+        HttpHeaders headers = buildHeaders(image.getOriginalImageName(), bytes);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(resource);
+    }
+
+    private HttpHeaders buildHeaders(String fileName, byte[] data) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentLength(data.length);
+        headers.setContentType(CommonUtils.contentType(fileName));
+        headers.setContentDisposition(CommonUtils.createContentDisposition(fileName));
+        return headers;
+    }
 
     @Data
     @AllArgsConstructor
@@ -121,7 +149,7 @@ public class TestController {
             this.id = article.getId();
             this.title = article.getTitle();
             this.content = article.getContent();
-            this.images = images.stream().map( image -> new String(image.getImageUrl())).collect(Collectors.toList());
+            this.images = images.stream().map( image -> new String(image.getImagePath())).collect(Collectors.toList());
         }
     }
 

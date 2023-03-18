@@ -31,12 +31,6 @@ spring:
     pathmatch:
       matching-strategy : ant_path_matcher
 
-#Redis Cache
-  redis:
-    host: localhost
-    port: 6379
-
-
 ---
 # s3 연습
 spring:
@@ -44,3 +38,4 @@ spring:
     include:
       - aws
       - credentials
+      - redis

@@ -1,4 +1,4 @@
-package project.AMS.awsS3.post;
+package project.AMS.awsS3.article;
 
 import lombok.AccessLevel;
 import lombok.Getter;

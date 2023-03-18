@@ -1,12 +1,9 @@
-package project.AMS.awsS3.post;
+package project.AMS.awsS3.article;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import project.AMS.awsS3.image.ImageService;
-
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
